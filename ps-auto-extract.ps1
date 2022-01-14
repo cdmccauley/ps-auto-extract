@@ -13,8 +13,10 @@ $watcher = New-Object IO.FileSystemWatcher $folder -Property @{
 
 $onCreated = Register-ObjectEvent $watcher -EventName Created -SourceIdentifier FileCreated -Action {
     $extensions = @(".7z", ".zip", ".rar")
-    $path = $Event.SourceEventArgs.FullPath
-    $extension = [System.IO.Path]::GetExtension($path)
+    $source = $Event.SourceEventArgs.FullPath
+    $destination = [System.IO.Path]::GetFileNameWithoutExtension($source)
+    $extension = [System.IO.Path]::GetExtension($source)
     $isArchive = $extensions.Contains($extension)
-    if ($isArchive) { 7z x $path }
+    $command = "7z x $source -o$destination"
+    if ($isArchive) { Invoke-Expression -Command $command }
 }

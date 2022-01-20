@@ -2,7 +2,7 @@
 
 # TODO: check if 7z in path
 
-$folder = "C:\Users\Chris\Downloads"
+$folder = "$env:USERPROFILE\Downloads"
 
 Set-Location $folder
 

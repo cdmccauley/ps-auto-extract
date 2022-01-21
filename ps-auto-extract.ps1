@@ -17,6 +17,10 @@ $onCreated = Register-ObjectEvent $watcher -EventName Created -SourceIdentifier 
     $destination = [System.IO.Path]::GetFileNameWithoutExtension($source)
     $extension = [System.IO.Path]::GetExtension($source)
     $isArchive = $extensions.Contains($extension)
-    $command = "7z x $source -o$destination"
-    if ($isArchive) { Invoke-Expression -Command $command }
+    $command = "7z x $source -o$destination 2>''"
+    if ($isArchive) {
+        $errout = $stdout = ""
+        $null = Invoke-Expression -Command $command -ErrorVariable errout -OutVariable stdout
+        if ($errout -ne $null) { Write-Host $errout[0].Exception $errout[0].Exception.Message $errout[0].Exception.StackTrace }
+    }
 }

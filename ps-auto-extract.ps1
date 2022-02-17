@@ -46,14 +46,21 @@ try
       # interpolate absolute destination path
       $destination = "$destinationRoot\$destinationDir"
       # create 7z command to extract archive
-      $command = "7z x '$source' -o'$destination' 2>''"
-      # ready error flag
-      $errout = $null
-      # invoke 7z
-      $null = Invoke-Expression -Command $command -ErrorVariable errout
-      if ($errout -ne $null) { 
-        Write-Host $errout
+      # $command = "7z x '$source' -o'$destination' 2>''"
+      $isZip = $extension -eq ".zip"
+      if ($isZip) {
+        $command = "Expand-Archive -LiteralPath '$source' -DestinationPath '$destination'"
+      } else {
+        $command = "7z x '$source' -o'$destination'"
       }
+      # ready error flag
+      # $errout = $null
+      # # invoke 7z
+      # $null = Invoke-Expression -Command $command -ErrorVariable errout
+      Invoke-Expression -Command $command
+      # if ($errout -ne $null) { 
+      #   Write-Host $errout
+      # }
     }
 
     # the code is receiving this to work with:

@@ -1,0 +1,25 @@
+{
+  "name": "ps-auto-extract",
+  "version": "1.0.0",
+  "description": "testing an idea",
+  "main": "watcher.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cdmccauley/ps-auto-extract.git"
+  },
+  "bin": "watcher.js",
+  "author": "Chris McCauley",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cdmccauley/ps-auto-extract/issues"
+  },
+  "homepage": "https://github.com/cdmccauley/ps-auto-extract#readme",
+  "dependencies": {
+    "7zip-bin": "^5.1.1",
+    "chokidar": "^3.5.3",
+    "node-7z": "^3.0.0"
+  }
+}

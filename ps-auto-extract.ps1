@@ -7,6 +7,8 @@
 # $Path = $desktop
 $Path = "$env:USERPROFILE\Downloads"
 
+Set-Location $Path
+
 # specify which files you want to monitor
 $FileFilter = '*'  
 
@@ -49,8 +51,10 @@ try
       # $command = "7z x '$source' -o'$destination' 2>''"
       $isZip = $extension -eq ".zip"
       if ($isZip) {
-        $command = "Expand-Archive -LiteralPath '$source' -DestinationPath '$destination'"
+        # use powershell to extract zip (using 7z on zip is not reliable)
+        $command = "Expand-Archive -LiteralPath '$source'"
       } else {
+        # use 7z to extract 7z and rar
         $command = "7z x '$source' -o'$destination'"
       }
       # ready error flag

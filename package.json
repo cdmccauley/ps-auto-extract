@@ -1,22 +1,21 @@
 {
-  "name": "ps-auto-extract",
+  "name": "seconds-saver",
   "version": "1.0.0",
-  "description": "testing an idea",
+  "description": "automate .7z, .zip and .rar extraction in Downloads",
   "main": "watcher.js",
   "scripts": {
     "test": "test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cdmccauley/ps-auto-extract.git"
+    "url": "git+https://github.com/cdmccauley/seconds-saver.git"
   },
-  "bin": "watcher.js",
   "author": "Chris McCauley",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/cdmccauley/ps-auto-extract/issues"
+    "url": "https://github.com/cdmccauley/seconds-saver/issues"
   },
-  "homepage": "https://github.com/cdmccauley/ps-auto-extract#readme",
+  "homepage": "https://github.com/cdmccauley/seconds-saver#readme",
   "dependencies": {
     "7zip-bin": "^5.1.1",
     "chokidar": "^3.5.3",

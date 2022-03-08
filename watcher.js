@@ -7,6 +7,8 @@ const sevenZip = require("node-7z");
 
 const watchDirectory = `${os.homedir()}${path.sep}Downloads${path.sep}`;
 
+console.log("Monitoring", watchDirectory, "for new .7z, .zip or .rar files...");
+
 chokidar
   .watch(watchDirectory, {
     ignoreInitial: true,
@@ -19,6 +21,7 @@ chokidar
           filename,
           path.extname(filename)
         )}`;
+        console.log("Extracting", filename);
         const seven = sevenZip.extractFull(filename, output, {
           $bin: pathTo7zip,
         });

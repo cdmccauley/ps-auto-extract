@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "automate .7z, .zip and .rar extraction in Downloads",
   "main": "watcher.js",
+  "bin": "watcher.js",
+  "pkg": {
+    "targets": ["node16-win-x64"]
+  },
   "scripts": {
     "test": "test"
   },

@@ -14,6 +14,11 @@ try {
   chokidar
     .watch(watchDirectory, {
       ignoreInitial: true,
+      // need to wait for files to finish being downloaded before we can extract them
+      awaitWriteFinish: {
+        stabilityThreshold: 1000,
+        pollInterval: 100,
+      },
     })
     .on("add", (filename) => {
       try {
@@ -30,6 +35,7 @@ try {
           });
         } else if ([".zip"].includes(path.extname(filename).toLowerCase())) {
           // 7z does not like zip, use adm-zip
+          // NOTE: i'm probably wrong, was getting similar errors using 7z with 7z until including the awaitWriteFinish option
           const extract = async (asyncFilename, asyncOutput) => {
             const zip = new admZip(asyncFilename);
             await zip.extractAllTo(asyncOutput, true);

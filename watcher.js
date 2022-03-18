@@ -4,7 +4,6 @@ const os = require("os");
 const chokidar = require("chokidar");
 const sevenBin = require("7zip-bin");
 const sevenZip = require("node-7z");
-const admZip = require("adm-zip");
 
 const watchDirectory = `${os.homedir()}${path.sep}Downloads${path.sep}`;
 
@@ -14,10 +13,10 @@ try {
   chokidar
     .watch(watchDirectory, {
       ignoreInitial: true,
-      // need to wait for files to finish being downloaded before we can extract them
+      // need to wait for files to finish being downloaded before extracting
       awaitWriteFinish: {
         stabilityThreshold: 1000,
-        pollInterval: 100,
+        pollInterval: 200,
       },
     })
     .on("add", (filename) => {
@@ -26,22 +25,13 @@ try {
           filename,
           path.extname(filename)
         )}`;
-        if ([".7z", ".rar"].includes(path.extname(filename).toLowerCase())) {
+        if ([".7z", ".rar", ".zip"].includes(path.extname(filename).toLowerCase())) {
           // use node-7z and 7zip-bin
           const pathTo7zip = sevenBin.path7za;
           console.log("Extracting", filename);
           const seven = sevenZip.extractFull(filename, output, {
             $bin: pathTo7zip,
           });
-        } else if ([".zip"].includes(path.extname(filename).toLowerCase())) {
-          // 7z does not like zip, use adm-zip
-          // NOTE: i'm probably wrong, was getting similar errors using 7z with 7z until including the awaitWriteFinish option
-          const extract = async (asyncFilename, asyncOutput) => {
-            const zip = new admZip(asyncFilename);
-            await zip.extractAllTo(asyncOutput, true);
-          };
-          console.log("Extracting", filename);
-          extract(filename, output);
         }
       } catch (e) {
         console.log(e);
